@@ -1,0 +1,30 @@
+import { fs } from 'node:fs';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const genDiff => {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+
+//начала я использую path.resolve(process.cwd(), file1).trim(), затем читаю с помощью readFileSync и затем уже преобразую в объект с помощью JSON.parse()
+//функция должна принимать на вход пути до файлов, и возвращать результат сравнения
+const file1 = fs.readFileSync('<file1.json>'); //получить содержимое файловстроку в формате JSON
+const file1obj = JSON.parse(file1);
+};
+export default genDiff;
+//содержимое файлов преобразовать в объект. Именно с полученными объектами работает функция, сравнивающая их по ключам и значениям и собирающая строку-результат.
+
+// Получите все ключи из обоих объектов, затем найдите их объединение, тот самый единый массив. Затем сравнивайте и проверяйте, что стало с каждым из ключей. (проходим reduce по уникальным ключам 4) в момент прохода reduce выполняется проверка на 4 условия (добавлено, удалено, измененно. не изменено)
+//Если ключ есть в первом объекте, но отсутствует во втором - значит удалён. Если отсутствует в первом, но есть во втором - добавлен.  Когда вы встретили ключ, который изменён, сначала запишите в результат значение из первого объекта, а затем из второго.
+//редьюсом получил новый объект
+
+//path.resolve и process.cwd
+
+//перевод пути в объект
+//path.resolve сама подставляет путь до текущей директории, если ей передан относительный путь.
+//(__dirname, '..', 'fixtures', filename)
+ 
+ //(ключ- состояние "same", "deleted", "changed" and "added")значение- функция-парсер вида : `({name, oldValue, newValue}) => {return `   + ${name}: ${newValue}\n   - ${name}: ${oldValue}`; }`
+ //var fs = require('fs');
+ //fs.readFile(__filename, function(err, data)
