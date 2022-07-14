@@ -9,3 +9,5 @@
 
 ### Example
 [![asciicast](https://asciinema.org/a/508084.svg)](https://asciinema.org/a/508084)
+
+### Github Actions
