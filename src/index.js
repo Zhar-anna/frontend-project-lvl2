@@ -1,18 +1,14 @@
 import fs from 'fs';
 import path from 'path';
 import _ from 'lodash';
-// import { fileURLToPath } from 'url';
 
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = dirname(__filename);
-// const getFixturePath = (filename) => resolve(__dirname, '..', '__fixtures__', filename);
-const getPathFile = (filepath) => path.resolve(process.cwd(), filepath).trim();
 // path.resolve сама подставляет путь до текущей директории, если ей передан относительный путь
 // использую path.resolve(process.cwd(), file1).trim()
-const readFile = (filepath) => fs.readFileSync(getPathFile(filepath), 'utf-8');
 // получить содержимое файлов - строку в формате JSON
 const genDiff = (filepath1, filepath2) => {
 // функция должна принимать на вход пути до файлов, и возвращать результат сравнения
+  const getPathFile = (filepath) => path.resolve(process.cwd(), filepath).trim();
+  const readFile = (filepath) => fs.readFileSync(getPathFile(filepath), 'utf-8');
   const dataFromFilepath1 = readFile(filepath1);
   const dataFromFilepath2 = readFile(filepath2);
   const file1obj = JSON.parse(dataFromFilepath1);
@@ -82,7 +78,7 @@ const genDiff = (filepath1, filepath2) => {
     }
   });
   const diffStr = parts.join('\n  ');
-  const toprint = `{\n  ${diffStr}\n}`;
+  const toprint = `{\n  ${diffStr}}`;
   return toprint;
 };
 export default genDiff;
