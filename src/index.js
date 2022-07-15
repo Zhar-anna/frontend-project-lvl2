@@ -78,7 +78,7 @@ const genDiff = (filepath1, filepath2) => {
     }
   });
   const diffStr = parts.join('\n  ');
-  const toprint = `{\n  ${diffStr}}`;
+  const toprint = `{\n  ${diffStr}\n}`;
   return toprint;
 };
 export default genDiff;
