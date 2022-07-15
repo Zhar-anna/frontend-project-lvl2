@@ -14,7 +14,7 @@ publish:
 	npm publish --dry-run
 
 test-coverage:
-	npm -- --coverage --coverageProvider=v8
+	npm test -- --coverage --coverageProvider=v8
 
 test-watch:
 	npm test -- --watch
