@@ -1,7 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 import _ from 'lodash';
+import getParser from './parsers.js';
+// import format from './formatters/index.js';
 
+// Определить здесь формат, прочеть и отправить на парсинг. вернуть и вытащить ключи
 // path.resolve сама подставляет путь до текущей директории, если ей передан относительный путь
 // использую path.resolve(process.cwd(), file1).trim()
 // получить содержимое файлов - строку в формате JSON
@@ -11,9 +14,9 @@ const genDiff = (filepath1, filepath2) => {
   const readFile = (filepath) => fs.readFileSync(getPathFile(filepath), 'utf-8');
   const dataFromFilepath1 = readFile(filepath1);
   const dataFromFilepath2 = readFile(filepath2);
-  const file1obj = JSON.parse(dataFromFilepath1);
+  const file1obj = getParser(dataFromFilepath1, formatFile1);
   // содержимое файлов преобразовать в объект.
-  const file2obj = JSON.parse(dataFromFilepath2);
+  const file2obj = getParser(dataFromFilepath2, formatFile2);
   const arrKeyFile1 = _.keys(file1obj);
   // Получите все ключи из обоих объектов
   const arrKeyFile2 = _.keys(file2obj);
