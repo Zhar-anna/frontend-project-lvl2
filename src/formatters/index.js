@@ -1,6 +1,6 @@
 const getFormat = (path) => {
-  const format = path.slice(-4);
+  const format = path.split('.').reverse()[0];
   return format;
 };
 
-export { getFormat };
+export default getFormat;

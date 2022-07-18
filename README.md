@@ -14,3 +14,4 @@
 [![asciicast](https://asciinema.org/a/508084.svg)](https://asciinema.org/a/508084)
 
 ### Example YAML
+[![asciicast](https://asciinema.org/a/z6P3FKCjHjUZvVQeCimr5PwTz.svg)](https://asciinema.org/a/z6P3FKCjHjUZvVQeCimr5PwTz)

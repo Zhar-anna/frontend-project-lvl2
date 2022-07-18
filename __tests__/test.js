@@ -10,9 +10,13 @@ const __dirname = path.dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
 const actual1 = genDiff(getFixturePath('file1.json'), getFixturePath('file2.json'));
-const expected1 = readFile('result.txt');
-console.log('exp==', expected1);
-console.log('act==', actual1);
-test('result must be equal "result.txt"', () => {
-  expect(actual1).toEqual(expected1);
+const expected = readFile('result.txt');
+const actual2 = genDiff(getFixturePath('file1.yaml'), getFixturePath('file2.yaml'));
+
+test('Compare JSON files', () => {
+  expect(actual1).toEqual(expected);
+});
+
+test('Compare YAML files', () => {
+  expect(actual2).toEqual(expected);
 });

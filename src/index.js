@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import _ from 'lodash';
-import { getParser } from './parsers.js';
-import { getFormat } from './formatters/index.js';
+import getParser from './parsers.js';
+import getFormat from './formatters/index.js';
 
 // Определить здесь формат, прочеть и отправить на парсинг. вернуть и вытащить ключи
 // получить содержимое файлов - строку в формате JSON
