@@ -11,8 +11,7 @@ program
   .arguments('<filepath1> <filepath2>')
   .option('-f, --format <type>', 'output format')
   .action((filepath1, filepath2) => {
-    // const diference = option.f ? 1 : undefined;
-    console.log(genDiff(filepath1, filepath2));// результат из индекса
+    console.log(genDiff(filepath1, filepath2));
   });
 program.parse();
 

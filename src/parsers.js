@@ -11,4 +11,4 @@ const getParser = (data, format) => {
       throw new Error('Unknown fornmat. You can use JSON or YAML formats.');
   }
 };
-export default getParser;
+export { getParser };
