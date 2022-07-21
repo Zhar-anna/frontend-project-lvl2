@@ -1,16 +1,9 @@
-const getFormat = (path) => {
-  const format = path.split('.').reverse()[0];
-  return format;
+import  stylish  from './stylish.js';
+
+ const chooseFormat = (data, format) => {
+  if(format === 'stylish') {
+    return stylish(data);
+  }
 };
 
-export default getFormat;
-// import stylish from './stylish.js';
-
-// export default (data, format) => {
-//   switch (format) {
-//     case 'stylish':
-//       return stylish(data);
-//     default:
-//       throw new Error(`Unknown format: ${format}`);
-//   }
-// };
+  export default chooseFormat;

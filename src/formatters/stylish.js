@@ -1,13 +1,19 @@
+// import _ from 'lodash';
+
 // Реализуйте форматер, выводящий внутреннее дерево как показано сверху. Назовите его stylish.
-// К тебе должен в форматтер приходить АСТ. Представляй АСТ как сырой материал из которого ты уже будешь собирать вывод.
-
-// В данном шаге формат вывода визуальный. Т.е. смотрим в объект и видим: что пришло, что ушло, а что изменилось или осталось неизменным. В следующем шаге вывод будет строиться на основе всё того же АСТ, но он - вывод - будет уже текстовым, а не визуальным.
-
-// В подсказке про пример АСТ, если перейти по ссылке, будет вкладка Syntax. Она наиболее близко показывает суть ожидаемого.
-
-// форматтер должен добавить табуляции в начала строк? Или фигурные скобки тоже?
-
-// Да, всё верно. В выбранном форматтере финальной версией будет готовый, более не изменяемый, результат.
+// const  stringfy = (data, symbol, spaceCount) => {
+//     if (!_.isObject(data)) {
+//         return data;
+//     }
+//     const spaceForKey = spaceCount.repeat(symbol + 3);
+//     const spaceForBracket = spaceCount.repeat(symbol + 1);
+//     const line = Object.entries(data)
+//       .map(([key, value]) => `${spaceForKey}${key}: ${stringfy(value, symbol, spaceCount)}`);
+//       return ['{', ...line, `${spaceForBracket}}`].join('\n');
+// };
+// значение-
+// функция-парсер вида : `({name, oldValue, newValue}) =>
+// {return ` + ${name}: ${newValue}\n - ${name}: ${oldValue}`; }`
 // если ключ был удалён, то у него не может быть детей.
 
 // {
@@ -18,28 +24,29 @@
 //     'children': [если есть дети, они рекурсивно отображаются в массиве]
 //     }
 // И если значение ключа в обоих файлах объект, только тогда нужно запускать рекурсию.
-// const stylish = (tree, space = '.', spacesCount = 7) => {
-//     // console.log('CURRENT TREE', tree);
-//     const indent = n => space.repeat(n * spacesCount);
-//     const iter = (node, depth) => {
-//       // console.log('CURRENT NODE', node);
-//       const result = node.flatMap((item) => {
-//         switch (item.status) {
-//           case 'deleted':
-//             return `${indent(depth)}- ${item.name}: ${item.value}`;
-//           case 'added':
-//             return `${indent(depth)}+ ${item.name}: ${item.value}`;
-//           case 'nested':
-//             return `${indent(depth)}  ${item.name}: {${iter(item.value, depth + 1)}${indent(depth)}  }`;
-//           case 'modified':
-//             return `${indent(depth)}- ${item.name}: ${item.value1}\n${indent(depth)}+ ${item.name}: ${item.value2}`;
-//           case 'unchanged':
-//             return `${indent(depth)}  ${item.name}: ${item.value}`;
-//           default:
-//             throw new Error(`Unknown type: '${item.status}'`);
-//         }
-//       });
-//       return `\n${result.join('\n')}\n`;
-//     };
-//     return `{${iter(tree, 1)}}`;
-//   };
+const stylish = (tree, space = '  ', spaceCount = 1) => {
+    const indent = n => space.repeat(n * spaceCount);
+    const iter = (node, depth) => {
+      const result = node.flatMap((item) => {
+        switch (item.type) {
+          case 'deleted':
+            return `${indent(depth)}- ${item.name}: ${item.value}`;
+          case 'added':
+            return `${indent(depth)}+ ${item.name}: ${item.value}`;
+          case 'nested':
+            return `${indent(depth)}  ${item.name}: {${iter(item.value, depth + 1)}${indent(depth)}  }`;
+          case 'modified':
+            return `${indent(depth)}- ${item.name}: ${item.value1}\n${indent(depth)}+ ${item.name}: ${item.value2}`;
+          case 'unchanged':
+            return `${indent(depth)}  ${item.name}: ${item.value}`;
+          default:
+            throw new Error(`Unknown type: '${item.status}'`);
+        }
+      });
+      return `\n${result.join('\n')}\n`;
+    };
+    return `{${iter(tree, 1)}}`;
+  };
+
+  export default stylish;
+
