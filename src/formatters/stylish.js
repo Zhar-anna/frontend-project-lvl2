@@ -1,4 +1,4 @@
-// import _ from 'lodash';
+import _ from 'lodash';
 
 // Реализуйте форматер, выводящий внутреннее дерево как показано сверху. Назовите его stylish.
 // const  stringfy = (data, symbol, spaceCount) => {
@@ -11,10 +11,6 @@
 //       .map(([key, value]) => `${spaceForKey}${key}: ${stringfy(value, symbol, spaceCount)}`);
 //       return ['{', ...line, `${spaceForBracket}}`].join('\n');
 // };
-// значение-
-// функция-парсер вида : `({name, oldValue, newValue}) =>
-// {return ` + ${name}: ${newValue}\n - ${name}: ${oldValue}`; }`
-// если ключ был удалён, то у него не может быть детей.
 
 // {
 //     'key': key,
@@ -25,28 +21,30 @@
 //     }
 // И если значение ключа в обоих файлах объект, только тогда нужно запускать рекурсию.
 const stylish = (tree, space = '  ', spaceCount = 1) => {
-    const indent = n => space.repeat(n * spaceCount);
-    const iter = (node, depth) => {
-      const result = node.flatMap((item) => {
-        switch (item.type) {
-          case 'deleted':
-            return `${indent(depth)}- ${item.name}: ${item.value}`;
-          case 'added':
-            return `${indent(depth)}+ ${item.name}: ${item.value}`;
-          case 'nested':
-            return `${indent(depth)}  ${item.name}: {${iter(item.value, depth + 1)}${indent(depth)}  }`;
-          case 'modified':
-            return `${indent(depth)}- ${item.name}: ${item.value1}\n${indent(depth)}+ ${item.name}: ${item.value2}`;
-          case 'unchanged':
-            return `${indent(depth)}  ${item.name}: ${item.value}`;
-          default:
-            throw new Error(`Unknown type: '${item.status}'`);
-        }
-      });
-      return `\n${result.join('\n')}\n`;
-    };
-    return `{${iter(tree, 1)}}`;
+  const indent = n => space.repeat(n * spaceCount);
+  const iter = (node, depth) => {
+    if (!_.isObject(node)) {
+      return { ...node };
+    }
+    const result = node.flatMap((item) => {
+      switch (item.type) {
+        case 'deleted':
+          return `${indent(depth)}- ${item.name}: ${item.value}`;
+        case 'added':
+          return `${indent(depth)}+ ${item.name}: ${item.value}`;
+        case 'nested':
+          return `${indent(depth)}  ${item.name}: {${iter(item.value, depth + 1)}${indent(depth)}  }`;
+        case 'changed':
+          return `${indent(depth)}- ${item.name}: ${item.value1}\n${indent(depth)}+ ${item.name}: ${item.value2}`;
+        case 'unchanged':
+          return `${indent(depth)}  ${item.name}: ${item.value}`;
+        default:
+          throw new Error(`Unknown type: '${item.type}'`);
+      }
+    });
+    return `\n${result.join('\n')}\n`;
   };
+  return `{${iter(tree, 1)}}`;
+};
 
-  export default stylish;
-
+export default stylish;
