@@ -40,7 +40,7 @@ const findDiff = (obj1, obj2) => {
         type: 'added',
       };
     }
-    if (_.isPlainObject(value1) || _.isPlainObject(value2)) {
+    if (_.isObject(value1) && _.isObject(value2)) {
       return {
         name: key,
         value: findDiff(value1, value2),
@@ -53,7 +53,7 @@ const findDiff = (obj1, obj2) => {
   // { name: 'proxy', value: '123.234.53.22', type: 'deleted' },
   // { name: 'timeout', value1: 50, value2: 20, type: 'changed' },
   // { name: 'verbose', value: true, type: 'added' } ]
-  console.log(result);
+  return result;
 };
 // получить содержимое файлов - строку в формате JSON
 const genDiff = (filepath1, filepath2, format = 'stylish') => {
