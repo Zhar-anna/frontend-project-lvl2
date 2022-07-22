@@ -1,8 +1,11 @@
 import stylish from './stylish.js';
 
 const chooseFormat = (data, format) => {
-  if (format === 'stylish') {
-    return stylish(data);
+  switch (format) {
+    case 'stylish':
+      return stylish(data);
+    default:
+      throw new Error(`Unknown format: ${format}`);
   }
 };
 

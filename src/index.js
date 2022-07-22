@@ -9,44 +9,42 @@ const findDiff = (obj1, obj2) => {
   const sortedKeys = _.sortBy(Object.keys({ ...obj1, ...obj2 }));
   // затем найдите их объединение, тот самый единый массив
   const result = sortedKeys.map((key) => {
-    const value1 = obj1[key];
-    const value2 = obj2[key];
     if (Object.hasOwn(obj1, key) && Object.hasOwn(obj2, key)) {
-      if (value1 === value2) {
+      if (obj1[key] !== obj2[key]) {
         return {
           name: key,
-          value1,
-          type: 'unchanged',
+          value1: obj1[key],
+          value2: obj2[key],
+          type: 'changed',
         };
       }
-      return {
-        name: key,
-        value1,
-        value2,
-        type: 'changed',
-      };
     }
     if (!Object.hasOwn(obj2, key)) {
       return {
         name: key,
-        value1,
+        value: obj1[key],
         type: 'deleted',
       };
     }
     if (!Object.hasOwn(obj1, key) && Object.hasOwn(obj2, key)) {
       return {
         name: key,
-        value2,
+        value: obj2[key],
         type: 'added',
       };
     }
-    if (_.isObject(value1) && _.isObject(value2)) {
+    if (_.isObject(obj1[key]) && _.isObject(obj2[key])) {
       return {
         name: key,
-        value: findDiff(value1, value2),
+        value: findDiff(obj1[key], obj2[key]),
         type: 'nested',
       };
     }
+    return {
+      name: key,
+      value: obj1[key],
+      type: 'unchanged',
+    };
   });
   // [ { name: 'follow', value: false, type: 'deleted' },
   // { name: 'host', value: 'hexlet.io', type: 'unchanged' },

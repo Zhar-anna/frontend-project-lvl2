@@ -15,3 +15,6 @@
 
 ### Example YAML
 [![asciicast](https://asciinema.org/a/z6P3FKCjHjUZvVQeCimr5PwTz.svg)](https://asciinema.org/a/z6P3FKCjHjUZvVQeCimr5PwTz)
+
+### Example nested files
+[![https://asciinema.org/a/510281.svg)](https://asciinema.org/a/510281)

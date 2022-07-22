@@ -1,4 +1,5 @@
 import _ from 'lodash';
+
 const stringify = (data, depth, replacer) => {
   if (!_.isObject(data)) {
     return data;
@@ -42,31 +43,3 @@ const stylish = (diff, replacer = '  ') => {
 };
 
 export default stylish;
-// const stylish = (tree, space = '  ', spaceCount = 1) => {
-//   const indent = n => space.repeat(n * spaceCount);
-//   const iter = (node, depth) => {
-//     if (!_.isObject(node)) {
-//       return node;
-//     }
-//     const result = node.flatMap((item) => {
-//       switch (item.type) {
-//         case 'deleted':
-//           return `${indent(depth)}- ${item.name}: ${item.value}`;
-//         case 'added':
-//           return `${indent(depth)}+ ${item.name}: ${item.value}`;
-//         case 'nested':
-//           return `${indent(depth)}  ${item.name}: {${iter(item.value, depth + 1)}${indent(depth)}  }`;
-//         case 'changed':
-//           return `${indent(depth)}- ${item.name}: ${item.value1}\n${indent(depth)}+ ${item.name}: ${item.value2}`;
-//         case 'unchanged':
-//           return `${indent(depth)}  ${item.name}: ${item.value}`;
-//         default:
-//           throw new Error(`Unknown type: '${item.type}'`);
-//       }
-//     });
-//     return `\n${result.join('\n')}\n`;
-//   };
-//   return `{${iter(tree, 1)}}`;
-// };
-
-// export default stylish;
