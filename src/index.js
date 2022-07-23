@@ -16,21 +16,21 @@ const findDiff = (obj1, obj2) => {
         type: 'nested',
       };
     }
-    if (!Object.hasOwn(obj2, key)) {
+    if (!_.has(obj2, key)) {
       return {
         name: key,
         value: obj1[key],
         type: 'deleted',
       };
     }
-    if (!Object.hasOwn(obj1, key)) {
+    if (!_.has(obj1, key)) {
       return {
         name: key,
         value: obj2[key],
         type: 'added',
       };
     }
-    if (Object.hasOwn(obj1, key) && Object.hasOwn(obj2, key)) {
+    if (_.has(obj1, key) && _.has(obj2, key)) {
       if (obj1[key] !== obj2[key]) {
         return {
           name: key,
