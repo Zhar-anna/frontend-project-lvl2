@@ -51,7 +51,7 @@ const findDiff = (obj1, obj2) => {
   // { name: 'proxy', value: '123.234.53.22', type: 'deleted' },
   // { name: 'timeout', value1: 50, value2: 20, type: 'changed' },
   // { name: 'verbose', value: true, type: 'added' } ]
-  return result;
+  console.log(JSON.stringify(result));
 };
 // получить содержимое файлов - строку в формате JSON
 const genDiff = (filepath1, filepath2, format = 'stylish') => {

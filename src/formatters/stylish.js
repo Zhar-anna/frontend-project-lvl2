@@ -37,7 +37,6 @@ const stylish = (diff, replacer = '  ') => {
         throw new Error(`Type: ${type} is undefined`);
     }
   });
-
   const stylishDiff = iter(diff, 1);
   return ['{', ...stylishDiff, '}'].join('\n');
 };
