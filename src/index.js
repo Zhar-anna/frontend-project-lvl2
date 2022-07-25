@@ -46,14 +46,9 @@ const findDiff = (obj1, obj2) => {
       type: 'unchanged',
     };
   });
-  // [ { name: 'follow', value: false, type: 'deleted' },
-  // { name: 'host', value: 'hexlet.io', type: 'unchanged' },
-  // { name: 'proxy', value: '123.234.53.22', type: 'deleted' },
-  // { name: 'timeout', value1: 50, value2: 20, type: 'changed' },
-  // { name: 'verbose', value: true, type: 'added' } ]
   return result;
 };
-// получить содержимое файлов - строку в формате JSON
+
 const genDiff = (filepath1, filepath2, format = 'stylish') => {
   // функция должна принимать на вход пути до файлов, и возвращать результат сравнения
   const getPathFile = (filepath) => path.resolve(process.cwd(), filepath).trim();
@@ -61,7 +56,6 @@ const genDiff = (filepath1, filepath2, format = 'stylish') => {
   const dataFromFilepath1 = readFile(filepath1);
   const dataFromFilepath2 = readFile(filepath2);
   const file1obj = getParser(dataFromFilepath1, getFileFormat(filepath1));
-  // содержимое файлов преобразовать в объект.
   const file2obj = getParser(dataFromFilepath2, getFileFormat(filepath2));
   const diff = findDiff(file1obj, file2obj);
   return getFormat(diff, format);
