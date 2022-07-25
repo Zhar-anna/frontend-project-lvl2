@@ -5,7 +5,7 @@ const chooseFormat = (data, format) => {
   switch (format) {
     case 'stylish':
       return stylish(data);
-    case 'palin':
+    case 'plain':
       return plain(data);
     default:
       throw new Error(`Unknown format: ${format}`);
