@@ -12,22 +12,24 @@ const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8'
 const actualJsonStylish = genDiff(getFixturePath('file1.json'), getFixturePath('file2.json'), 'stylish');
 const expectedStylish = readFile('stylishOutput.txt');
 const actualYamlStylish = genDiff(getFixturePath('file1.yaml'), getFixturePath('file2.yaml'), 'stylish');
-const expectadPlain = readFile('plainOutput.txt');
+const expectedPlain = readFile('plainOutput.txt');
 const actualJsonPlain = genDiff(getFixturePath('file1.json'), getFixturePath('file2.json'), 'plain');
 const actualYamlPlain = genDiff(getFixturePath('file1.yaml'), getFixturePath('file2.yaml'), 'plain');
+const expectedJson = readFile('outputresult.json');
+const actualJsontoJson = genDiff(getFixturePath('file1.json'), getFixturePath('file2.json'), 'json');
+const actualYamltoJson = genDiff(getFixturePath('file1.yaml'), getFixturePath('file2.yaml'), 'json');
 
-test('Compare JSON files to Stylish', () => {
+test('Compare files to Stylish', () => {
   expect(actualJsonStylish).toEqual(expectedStylish);
-});
-
-test('Compare YAML files to Stylish', () => {
   expect(actualYamlStylish).toEqual(expectedStylish);
 });
 
-test('Compare JSON files to Plain', () => {
-  expect(actualJsonPlain).toEqual(expectadPlain);
+test('Compare files to Plain', () => {
+  expect(actualJsonPlain).toEqual(expectedPlain);
+  expect(actualYamlPlain).toEqual(expectedPlain);
 });
 
-test('Compare YAML files to Plain', () => {
-  expect(actualYamlPlain).toEqual(expectadPlain);
+test('Compare files to JSON', () => {
+  expect(actualJsontoJson).toEqual(expectedJson);
+  expect(actualYamltoJson).toEqual(expectedJson);
 });

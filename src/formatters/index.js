@@ -8,7 +8,7 @@ const chooseFormat = (data, format) => {
     case 'plain':
       return plain(data);
     case 'json':
-      return JSON(data);
+      return JSON.stringify(data);
     default:
       throw new Error(`Unknown format: ${format}`);
   }
