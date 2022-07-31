@@ -9,27 +9,18 @@ const __dirname = path.dirname(__filename);
 
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
-const actualJsonStylish = genDiff(getFixturePath('file1.json'), getFixturePath('file2.json'), 'stylish');
-const expectedStylish = readFile('stylishOutput.txt');
-const actualYamlStylish = genDiff(getFixturePath('file1.yaml'), getFixturePath('file2.yaml'), 'stylish');
-const expectedPlain = readFile('plainOutput.txt');
-const actualJsonPlain = genDiff(getFixturePath('file1.json'), getFixturePath('file2.json'), 'plain');
-const actualYamlPlain = genDiff(getFixturePath('file1.yaml'), getFixturePath('file2.yaml'), 'plain');
-const expectedJson = readFile('outputresult.json');
-const actualJsontoJson = genDiff(getFixturePath('file1.json'), getFixturePath('file2.json'), 'json');
-const actualYamltoJson = genDiff(getFixturePath('file1.yaml'), getFixturePath('file2.yaml'), 'json');
 
 test('Compare files to Stylish', () => {
-  expect(actualJsonStylish).toEqual(expectedStylish);
-  expect(actualYamlStylish).toEqual(expectedStylish);
+  expect(genDiff(getFixturePath('file1.json'), getFixturePath('file2.json'), 'stylish')).toEqual(readFile('stylishOutput.txt'));
+  expect(genDiff(getFixturePath('file1.yaml'), getFixturePath('file2.yaml'), 'stylish')).toEqual(readFile('stylishOutput.txt'));
 });
 
 test('Compare files to Plain', () => {
-  expect(actualJsonPlain).toEqual(expectedPlain);
-  expect(actualYamlPlain).toEqual(expectedPlain);
+  expect(genDiff(getFixturePath('file1.json'), getFixturePath('file2.json'), 'plain')).toEqual(readFile('plainOutput.txt'));
+  expect(genDiff(getFixturePath('file1.yaml'), getFixturePath('file2.yaml'), 'plain')).toEqual(readFile('plainOutput.txt'));
 });
 
 test('Compare files to JSON', () => {
-  expect(actualJsontoJson).toEqual(expectedJson);
-  expect(actualYamltoJson).toEqual(expectedJson);
+  expect(genDiff(getFixturePath('file1.json'), getFixturePath('file2.json'), 'json')).toEqual(readFile('outputresult.json'));
+  expect(genDiff(getFixturePath('file1.yaml'), getFixturePath('file2.yaml'), 'json')).toEqual(readFile('outputresult.json'));
 });
