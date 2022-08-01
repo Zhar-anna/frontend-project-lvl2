@@ -10,31 +10,30 @@ const presentValue = (value) => {
   return value;
 };
 
-const plain = (tree, path = '') => {
-  const result = tree.flatMap((node) => {
-    const {
-      name, type, value, children,
-    } = node;
-    switch (type) {
-      case 'root': {
-        return plain(children, name);
-      }
-      case 'nested': {
-        return plain(children, `${path}${name}`);
-      }
-      case 'added':
-        return `Property '${path}${name}' was added with value: ${presentValue(value)}`;
-      case 'deleted':
-        return `Property '${path}${name}' was removed`;
-      case 'unchanged':
-        return [];
-      case 'changed':
-        return `Property '${path}${name}' was updated. From ${presentValue(node.value1)} to ${presentValue(node.value2)}`;
-      default:
-        throw new Error(`Type: ${type} is undefined`);
+const plain = (diff, path = '') => {
+  const {
+    type, children, name, value, value1, value2,
+  } = diff;
+  switch (type) {
+    case 'root': {
+      const result = children.flatMap((child) => plain(child, name));
+      return result.join('\n');
     }
-  });
-  return result.join('\n');
+    case 'nested': {
+      const result = children.flatMap((child) => plain(child, `${path}${name}.`));
+      return result.join('\n');
+    }
+    case 'added':
+      return `Property '${path}${name}' was added with value: ${presentValue(value)}`;
+    case 'deleted':
+      return `Property '${path}${name}' was removed`;
+    case 'unchanged':
+      return [];
+    case 'changed':
+      return `Property '${path}${name}' was updated. From ${presentValue(value1)} to ${presentValue(value2)}`;
+    default:
+      throw new Error(`Type: ${type} is undefined`);
+  }
 };
 
 export default plain;
