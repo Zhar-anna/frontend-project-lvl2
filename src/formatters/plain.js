@@ -11,28 +11,32 @@ const presentValue = (value) => {
 };
 
 const plain = (diff) => {
-  const iter = (tree, fileName) => {
-    const result = tree.flatMap((node) => {
-      const { name, value, type } = node;
-      const makePath = [...fileName, name].join('.');
+  const iter = (node, path = '') => {
+      const { name, value, type, children } = node;
+      // const makePath = [...fileName, name].join('.');
       switch (type) {
+        case 'root': {
+          const result = children.flatMap((child) => iter(child, name));
+          return result.join('\n');
+        }
+        case 'nested': {
+          const result = children.flatMap((child) => iter(child, `${path}${name}.`));
+          return result.join('\n');
+        }
         case 'added':
-          return `Property '${makePath}' was added with value: ${presentValue(value)}`;
+          return `Property '${path}${name}' was added with value: ${presentValue(value)}`;
         case 'deleted':
-          return `Property '${makePath}' was removed`;
-        case 'nested':
-          return `${iter(value, [makePath])}`;
+          return `Property '${path}${name}' was removed`;
+        
         case 'changed':
-          return `Property '${makePath}' was updated. From ${presentValue(node.value1)} to ${presentValue(node.value2)}`;
+          return `Property '${path}${name}' was updated. From ${presentValue(node.value1)} to ${presentValue(node.value2)}`;
         case 'unchanged':
           return [];
         default:
           throw new Error(`Type: ${type} is undefined`);
       }
-    });
-    return result.join('\n');
+    };
+     return iter(diff);
   };
-  return iter(diff, []);
-};
 
 export default plain;

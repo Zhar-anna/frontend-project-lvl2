@@ -6,7 +6,7 @@ const findDiff = (obj1, obj2) => {
     if (_.isObject(obj1[key]) && _.isObject(obj2[key])) {
       return {
         name: key,
-        value: findDiff(obj1[key], obj2[key]),
+        children: findDiff(obj1[key], obj2[key]),
         type: 'nested',
       };
     }
