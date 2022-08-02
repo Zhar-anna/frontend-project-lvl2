@@ -4,7 +4,7 @@ import diffTree from './findDiff.js';
 import getParser from './parsers.js';
 import getFormat from './formatters/index.js';
 
-const getFileFormat = (filepath) => filepath.split('.').reverse()[0];
+const getFileFormat = (filepath) => path.extname(filepath).slice(1);
 
 const genDiff = (filepath1, filepath2, format = 'stylish') => {
   const getPathFile = (filepath) => path.resolve(process.cwd(), filepath).trim();

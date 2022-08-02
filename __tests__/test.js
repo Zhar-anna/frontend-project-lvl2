@@ -11,12 +11,24 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
 
 const tests = [
-  { file1: 'file1.json', file2: 'file2.json', formatter: 'stylish', output: 'stylishOutput.txt', },
-  { file1: 'file1.yaml', file2: 'file2.yaml', formatter: 'stylish', output: 'stylishOutput.txt', },
-  { file1: 'file1.json', file2: 'file2.json', formatter: 'plain', output: 'plainOutput.txt', },
-  { file1: 'file1.yaml', file2: 'file2.yaml', formatter: 'plain', output: 'plainOutput.txt', },
-  { file1: 'file1.json', file2: 'file2.json', formatter: 'json', output: 'outputresult.json', },
-  { file1: 'file1.yaml', file2: 'file2.yaml', formatter: 'json', output: 'outputresult.json', },
+  {
+    file1: 'file1.json', file2: 'file2.json', formatter: 'stylish', output: 'stylishOutput.txt',
+  },
+  {
+    file1: 'file1.yaml', file2: 'file2.yaml', formatter: 'stylish', output: 'stylishOutput.txt',
+  },
+  {
+    file1: 'file1.json', file2: 'file2.json', formatter: 'plain', output: 'plainOutput.txt',
+  },
+  {
+    file1: 'file1.yaml', file2: 'file2.yaml', formatter: 'plain', output: 'plainOutput.txt',
+  },
+  {
+    file1: 'file1.json', file2: 'file2.json', formatter: 'json', output: 'outputresult.json',
+  },
+  {
+    file1: 'file1.yaml', file2: 'file2.yaml', formatter: 'json', output: 'outputresult.json',
+  },
 ];
 
 test.each(tests)('gendiff stylish, plain and json tests', ({
