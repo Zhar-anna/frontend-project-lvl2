@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const presentValue = (value) => {
+const checkValueFormat = (value) => {
   if (_.isObject(value)) {
     return '[complex value]';
   }
@@ -10,27 +10,28 @@ const presentValue = (value) => {
   return value;
 };
 
-const plain = (diff, path = '') => {
+const plain = (diff, fileName) => {
   const {
     type, children, name, value, value1, value2,
   } = diff;
+  const filePath = [...fileName, name].join('.');
   switch (type) {
+    case 'unchanged':
+      return [];
     case 'root': {
       const result = children.flatMap((child) => plain(child, name));
       return result.join('\n');
     }
     case 'nested': {
-      const result = children.flatMap((child) => plain(child, `${path}${name}.`));
+      const result = children.flatMap((child) => `${plain(child, [filePath])}.`);
       return result.join('\n');
     }
     case 'added':
-      return `Property '${path}${name}' was added with value: ${presentValue(value)}`;
+      return `Property '${filePath}' was added with value: ${checkValueFormat(value)}`;
     case 'deleted':
-      return `Property '${path}${name}' was removed`;
-    case 'unchanged':
-      return [];
+      return `Property '${filePath}' was removed`;
     case 'changed':
-      return `Property '${path}${name}' was updated. From ${presentValue(value1)} to ${presentValue(value2)}`;
+      return `Property '${filePath}' was updated. From ${checkValueFormat(value1)} to ${checkValueFormat(value2)}`;
     default:
       throw new Error(`Type: ${type} is undefined`);
   }
