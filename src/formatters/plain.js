@@ -10,28 +10,31 @@ const checkValueFormat = (value) => {
   return value;
 };
 
-const plain = (diff, fileName) => {
+const plain = (diff, fileName = []) => {
   const {
     type, children, name, value, value1, value2,
   } = diff;
-  const filePath = [...fileName, name].join('.');
+  const nestedKeys = [...fileName, name];
+  const joinPath = nestedKeys.join('.');
   switch (type) {
-    case 'unchanged':
-      return [];
     case 'root': {
-      const result = children.flatMap((child) => plain(child, name));
+      const result = children
+        .filter((child) => child.type !== 'unchanged')
+        .flatMap((child) => plain(child, []));
       return result.join('\n');
     }
     case 'nested': {
-      const result = children.flatMap((child) => `${plain(child, [filePath])}.`);
+      const result = children
+        .filter((child) => child.type !== 'unchanged')
+        .flatMap((child) => plain(child, nestedKeys));
       return result.join('\n');
     }
     case 'added':
-      return `Property '${filePath}' was added with value: ${checkValueFormat(value)}`;
+      return `Property '${joinPath}' was added with value: ${checkValueFormat(value)}`;
     case 'deleted':
-      return `Property '${filePath}' was removed`;
+      return `Property '${joinPath}' was removed`;
     case 'changed':
-      return `Property '${filePath}' was updated. From ${checkValueFormat(value1)} to ${checkValueFormat(value2)}`;
+      return `Property '${joinPath}' was updated. From ${checkValueFormat(value1)} to ${checkValueFormat(value2)}`;
     default:
       throw new Error(`Type: ${type} is undefined`);
   }
